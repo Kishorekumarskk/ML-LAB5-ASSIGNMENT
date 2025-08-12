@@ -1,29 +1,28 @@
-## A7. Using elbow plot, determine the optimal k value for k-means clustering. Use below code.
-
+## A7. Using the elbow plot, determine the optimal k value for k-means clustering. Use below code.
 
 import pandas as pd
-import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
 
-# Load dataset
-df = pd.read_csv("Cardiovascular_Disease_Dataset.csv")
+# Function for Elbow plot
+def elbow_plot(X_train, k_max):
+    distortions = []
+    for k in range(2, k_max):
+        kmeans = KMeans(n_clusters=k, random_state=0, n_init="auto").fit(X_train)
+        distortions.append(kmeans.inertia_)
+    return distortions
 
-# Prepare features
-X_clustering = df.drop(columns=['patientid', 'target'])
+if __name__ == "__main__":
+    # Load dataset
+    df = pd.read_csv("Cardiovascular_Disease_Dataset.csv")
+    drop_cols = ['cardio']
+    drop_cols = [col for col in drop_cols if col in df.columns]
+    X_cluster = df.drop(columns=drop_cols)
 
-# Elbow method
-distortions = []
-K = range(2, 20)
+    distortions = elbow_plot(X_cluster, 20)
 
-for k in K:
-    kmeans = KMeans(n_clusters=k, random_state=42, n_init="auto").fit(X_clustering)
-    distortions.append(kmeans.inertia_)
-
-# Plot
-plt.figure(figsize=(8,6))
-plt.plot(K, distortions, marker='o')
-plt.xlabel('Number of Clusters (k)')
-plt.ylabel('Distortion (Inertia)')
-plt.title('Elbow Method - Cardiovascular Dataset')
-plt.grid(True)
-plt.show()
+    plt.plot(range(2, 20), distortions, marker='o')
+    plt.xlabel("k")
+    plt.ylabel("Distortion (Inertia)")
+    plt.title("Elbow Plot for K-Means")
+    plt.show()
