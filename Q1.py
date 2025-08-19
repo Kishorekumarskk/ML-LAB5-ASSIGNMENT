@@ -6,9 +6,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, mean_absolute_percentage_error, r2_score
 from sklearn.model_selection import train_test_split
 
-# ------------------------------
 # Function to train and predict using Linear Regression
-# ------------------------------
 def train_linear_regression(X_train, y_train, X_test):
     """Train a Linear Regression model and predict on both train and test data."""
     model = LinearRegression()
@@ -21,7 +19,7 @@ def train_linear_regression(X_train, y_train, X_test):
 
 
 def evaluate_model(y_true, y_pred):
-    """Evaluate the model using MSE, RMSE, MAPE, and R2 score."""
+    """ Evaluate the model using MSE, RMSE, MAPE, and R2 score."""
     mse = mean_squared_error(y_true, y_pred)
     rmse = np.sqrt(mse)
     mape = mean_absolute_percentage_error(y_true, y_pred)
@@ -37,9 +35,8 @@ def evaluate_model(y_true, y_pred):
 
 
 
-# ------------------------------
-# Main Program - A1
-# ------------------------------
+Main Program - A1
+
 if __name__ == "__main__":
     # Load dataset
     dataset = pd.read_csv("Cardiovascular_Disease_Dataset.csv")
@@ -63,3 +60,4 @@ if __name__ == "__main__":
     print("---- A1: Single Attribute Model (Age -> RestingBP) ----")
     print("Train Metrics:", train_metrics)
     print("Test Metrics:", test_metrics)
+
